@@ -118,6 +118,33 @@ async function fetchTransactions(page = 1, limit = 10) {
     }
 }
 
-// Example usage: fetch first page with 10 transactions
 fetchTransactions();
 
+
+
+
+function renderChart(data) {
+    // Example chart initialization
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(transaction => transaction.text),
+            datasets: [{
+                label: 'Amount',
+                data: data.map(transaction => transaction.amount),
+                backgroundColor: data.map(transaction => transaction.amount < 0 ? '#f44336' : '#4CAF50')
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+}
+renderChart(transactions);
