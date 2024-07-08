@@ -104,3 +104,20 @@ darkModeToggle.addEventListener('click', toggleDarkMode);
 
 // Initialize
 fetchTransactions();
+
+// Fetch paginated transactions from server
+async function fetchTransactions(page = 1, limit = 10) {
+    try {
+        const response = await fetch(`/api/transactions?page=${page}&limit=${limit}`);
+        const data = await response.json();
+        transactions = data;
+        displayTransactions();
+        calculateBalance();
+    } catch (error) {
+        console.error('Error fetching transactions:', error.message);
+    }
+}
+
+// Example usage: fetch first page with 10 transactions
+fetchTransactions();
+
